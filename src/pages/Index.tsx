@@ -18,7 +18,7 @@ interface Scene {
   speaker: string;
   choices?: Choice[];
   isEnding?: boolean;
-  endingType?: 'perfect' | 'good' | 'neutral' | 'bad' | 'manipulation' | 'power' | 'truth' | 'trapped';
+  endingType?: 'perfect' | 'good' | 'neutral' | 'bad' | 'manipulation' | 'power' | 'truth' | 'trapped' | 'resistance';
 }
 
 const gameData: Scene[] = [
@@ -118,6 +118,17 @@ const gameData: Scene[] = [
     ]
   },
   {
+    id: 'recover_composure',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: 'Нет. Я не позволю ему видеть мою слабость. Я король. *глубокий вдох* Я восстанавливаю контроль над собой.',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Спокойно перейти к обсуждению дел', nextScene: 'business_calm', affectionChange: -5, trustChange: 15, vulnerabilityChange: -15 },
+      { text: 'Спросить о его намерениях прямо', nextScene: 'ask_intentions', affectionChange: 0, trustChange: 25, vulnerabilityChange: -10 }
+    ]
+  },
+  {
     id: 'early_confession',
     background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
     character: '🎭',
@@ -141,6 +152,124 @@ const gameData: Scene[] = [
     ]
   },
   {
+    id: 'realize_manipulation',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: 'Стоп. Его слова слишком сладкие. Прикосновение слишком расчётливое. Он... он использует мои чувства как инструмент.',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Отстраниться и противостоять', nextScene: 'confront_directly', affectionChange: -10, trustChange: 35, vulnerabilityChange: -30 },
+      { text: 'Сыграть в его игру осторожно', nextScene: 'play_his_game', affectionChange: 5, trustChange: 30, vulnerabilityChange: -15 },
+      { text: 'Дать ему понять, что раскрыли игру', nextScene: 'reveal_knowledge', affectionChange: 0, trustChange: 40, vulnerabilityChange: -25 }
+    ]
+  },
+  {
+    id: 'confront_directly',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: '"Аффогато. Хватит." *Я смотрю ему прямо в глаза* "Я знаю, что ты делаешь. И я не позволю тебе манипулировать мной."',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Ждать его реакции', nextScene: 'wait_reaction', affectionChange: 0, trustChange: 30, vulnerabilityChange: -20 }
+    ]
+  },
+  {
+    id: 'wait_reaction',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '🎭',
+    dialogue: '*долгая тишина* ...Вы раскрыли меня. *смеётся, но без злости* Браво, Ваше Величество. Мало кто способен устоять перед моими методами.',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Спросить, почему он так поступает', nextScene: 'why_manipulate', affectionChange: 0, trustChange: 20, vulnerabilityChange: 5 },
+      { text: 'Приказать ему уйти', nextScene: 'order_leave', affectionChange: -30, trustChange: 10, vulnerabilityChange: -30 },
+      { text: 'Предложить начать честно', nextScene: 'offer_honesty', affectionChange: 10, trustChange: 35, vulnerabilityChange: 10 }
+    ]
+  },
+  {
+    id: 'play_his_game',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: 'Если он хочет играть... Я могу играть тоже. Но по моим правилам. Я вижу его манипуляции, но не покажу этого.',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Притвориться, что поддаётесь', nextScene: 'fake_surrender', affectionChange: 5, trustChange: 25, vulnerabilityChange: -10 },
+      { text: 'Использовать его тактику против него', nextScene: 'turn_tables', affectionChange: 10, trustChange: 35, vulnerabilityChange: -20 }
+    ]
+  },
+  {
+    id: 'reveal_knowledge',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: '"Знаешь, Аффогато... твоя игра очень искусна. Почти сработала." *Я спокойно убираю его руку* "Почти."',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Наблюдать за его реакцией', nextScene: 'observe_response', affectionChange: 0, trustChange: 35, vulnerabilityChange: -25 }
+    ]
+  },
+  {
+    id: 'observe_response',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '🎭',
+    dialogue: '*его маска медленно меняется от удивления к... уважению?* Вы... вы действительно увидели сквозь меня. Впечатляюще.',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Спросить о его истинных чувствах', nextScene: 'ask_true_feelings', affectionChange: 15, trustChange: 40, vulnerabilityChange: 5 },
+      { text: 'Предложить новые правила', nextScene: 'new_rules', affectionChange: 10, trustChange: 45, vulnerabilityChange: -10 }
+    ]
+  },
+  {
+    id: 'fake_surrender',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '🎭',
+    dialogue: 'Вот и хорошо... *начинает "заботиться" о вас* Теперь просто доверьтесь мне во всём.',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Продолжать игру, изучая его', nextScene: 'study_him', affectionChange: 5, trustChange: 30, vulnerabilityChange: -5 },
+      { text: 'Раскрыть карты в нужный момент', nextScene: 'reveal_cards', affectionChange: 10, trustChange: 40, vulnerabilityChange: -15 }
+    ]
+  },
+  {
+    id: 'turn_tables',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: 'Я начинаю использовать его же слова, его же тактики. Но для другой цели - чтобы понять настоящего Аффогато под маской.',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Манипулировать им к честности', nextScene: 'manipulate_honesty', affectionChange: 15, trustChange: 35, vulnerabilityChange: -20 }
+    ]
+  },
+  {
+    id: 'study_him',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: 'Несколько дней я "поддаюсь". Но на самом деле изучаю его. Его паттерны. Его слабости. Моменты, когда маска спадает.',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Использовать собранную информацию', nextScene: 'use_information', affectionChange: 10, trustChange: 40, vulnerabilityChange: -25 }
+    ]
+  },
+  {
+    id: 'use_information',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: '"Аффогато. Я заметил кое-что." *Перечисляю его настоящие эмоции, которые он скрывал* "Ты одинок. Ты боишься. И ты хочешь, чтобы кто-то увидел настоящего тебя."',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Ждать его реакции', nextScene: 'his_breakdown', affectionChange: 20, trustChange: 50, vulnerabilityChange: -15 }
+    ]
+  },
+  {
+    id: 'his_breakdown',
+    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
+    character: '🎭',
+    dialogue: '*его маска трескается* Как... как ты узнал? Я так тщательно скрывал... *голос дрожит* Никто никогда не видел...',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Подойти и обнять', nextScene: 'ending_understanding', affectionChange: 60, trustChange: 70, vulnerabilityChange: 15 },
+      { text: 'Сказать что принимаете его', nextScene: 'ending_acceptance_earned', affectionChange: 55, trustChange: 65, vulnerabilityChange: 10 }
+    ]
+  },
+  {
     id: 'full_trust_trap',
     background: 'linear-gradient(to bottom, #0D0D1A 0%, #000000 100%)',
     character: '🎭',
@@ -159,7 +288,60 @@ const gameData: Scene[] = [
     choices: [
       { text: 'Поддаться его словам', nextScene: 'give_in_slowly', affectionChange: 20, trustChange: -25, vulnerabilityChange: 45 },
       { text: 'Настоять на равенстве', nextScene: 'demand_equality', affectionChange: 5, trustChange: 15, vulnerabilityChange: 15 },
-      { text: 'Разозлиться на его тон', nextScene: 'angry_realization', affectionChange: -10, trustChange: 25, vulnerabilityChange: -15 }
+      { text: 'Разозлиться и осознать манипуляцию', nextScene: 'angry_realization', affectionChange: -10, trustChange: 25, vulnerabilityChange: -15 }
+    ]
+  },
+  {
+    id: 'give_in_slowly',
+    background: 'linear-gradient(to bottom, #0D0D1A 0%, #1A1A2E 100%)',
+    character: '🎭',
+    dialogue: 'Вот так... день за днём. Доверяйте мне больше. Опирайтесь на меня. Я знаю, что лучше для вас.',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Полностью поддаться', nextScene: 'ending_velvet_chains', affectionChange: 35, trustChange: -40, vulnerabilityChange: 65 },
+      { text: 'В последний момент осознать', nextScene: 'last_moment_realize', affectionChange: 5, trustChange: 20, vulnerabilityChange: 30 }
+    ]
+  },
+  {
+    id: 'last_moment_realize',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: 'Стоп. Я... я теряю себя. Это не любовь. Это клетка. Пусть и золотая, но клетка.',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Вырваться из его влияния', nextScene: 'break_free', affectionChange: -15, trustChange: 30, vulnerabilityChange: -35 }
+    ]
+  },
+  {
+    id: 'break_free',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '👑',
+    dialogue: '"НЕТ!" *отстраняюсь резко* "Аффогато, это манипуляция. И я не позволю этому продолжаться."',
+    speaker: 'Дарк Какао',
+    choices: [
+      { text: 'Противостоять ему', nextScene: 'confrontation_after_trap', affectionChange: -10, trustChange: 35, vulnerabilityChange: -40 }
+    ]
+  },
+  {
+    id: 'confrontation_after_trap',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '🎭',
+    dialogue: '*удивлённо отступает* Вы... вырвались. Мало кто способен на это. *пауза* Вы сильнее, чем я думал.',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Потребовать объяснений', nextScene: 'demand_explanation', affectionChange: -5, trustChange: 30, vulnerabilityChange: -30 },
+      { text: 'Попытаться понять его', nextScene: 'try_understand', affectionChange: 10, trustChange: 40, vulnerabilityChange: -20 }
+    ]
+  },
+  {
+    id: 'demand_explanation',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    character: '🎭',
+    dialogue: 'Объяснений? *смеётся горько* Что вы хотите услышать? Что я монстр? Возможно. Что я не знаю другого способа? Это правда.',
+    speaker: 'Аффогато',
+    choices: [
+      { text: 'Предложить другой путь', nextScene: 'offer_different_way', affectionChange: 20, trustChange: 35, vulnerabilityChange: 15 },
+      { text: 'Сказать что понимаете', nextScene: 'understand_him', affectionChange: 15, trustChange: 30, vulnerabilityChange: 10 }
     ]
   },
   {
@@ -210,127 +392,53 @@ const gameData: Scene[] = [
     ]
   },
   {
-    id: 'trust_talk',
+    id: 'manipulate_honesty',
     background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: 'Доверие... иллюзия для слабых. Но знаете что? Иногда я думаю, что хочу верить в эту иллюзию. Особенно глядя на вас.',
-    speaker: 'Аффогато',
+    character: '👑',
+    dialogue: 'Я использую его же тактики. Тонкие намёки. Правильные вопросы. Не для контроля - для того чтобы он открылся.',
+    speaker: 'Дарк Какао',
     choices: [
-      { text: 'Спросить, что он имеет в виду', nextScene: 'what_mean', affectionChange: 5, trustChange: 15, vulnerabilityChange: 10 },
-      { text: 'Признаться, что чувствуете то же', nextScene: 'confess_feelings', affectionChange: 25, trustChange: 5, vulnerabilityChange: 35 },
-      { text: 'Сказать, что доверие нужно строить', nextScene: 'build_trust', affectionChange: 10, trustChange: 25, vulnerabilityChange: 5 }
+      { text: 'Продолжать осторожно', nextScene: 'careful_progress', affectionChange: 20, trustChange: 45, vulnerabilityChange: -15 }
     ]
   },
   {
-    id: 'confess_feelings',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
+    id: 'careful_progress',
+    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
     character: '🎭',
-    dialogue: 'Вы... чувствуете то же? *его глаза расширяются, и вы видите расчёт* Ваше Величество, это так трогательно. Знаете, я всегда мечтал услышать такое.',
+    dialogue: '*постепенно раскрывается* Вы... вы делаете то же, что и я. Но по-другому. Не для контроля. Для... понимания?',
     speaker: 'Аффогато',
     choices: [
-      { text: 'Поверить ему', nextScene: 'believe_him', affectionChange: 30, trustChange: -20, vulnerabilityChange: 45 },
-      { text: 'Заметить фальшь в голосе', nextScene: 'notice_fake', affectionChange: 5, trustChange: 20, vulnerabilityChange: 10 }
+      { text: 'Признаться в своих методах', nextScene: 'admit_methods', affectionChange: 30, trustChange: 60, vulnerabilityChange: 20 }
     ]
   },
   {
-    id: 'believe_him',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: '*обнимает вас нежно* О, мой дорогой король... позвольте мне быть рядом. Я буду заботиться о вас. О всём, что вас беспокоит.',
-    speaker: 'Аффогато',
+    id: 'admit_methods',
+    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
+    character: '👑',
+    dialogue: '"Да. Я использовал твои методы. Прости. Но я не знал другого способа достучаться до настоящего тебя."',
+    speaker: 'Дарк Какао',
     choices: [
-      { text: 'Обнять в ответ', nextScene: 'embrace_trap', affectionChange: 35, trustChange: -30, vulnerabilityChange: 55 },
-      { text: 'Что-то насторожило вас', nextScene: 'last_chance_realize', affectionChange: 15, trustChange: 10, vulnerabilityChange: 30 }
+      { text: 'Ждать реакции', nextScene: 'ending_equals', affectionChange: 40, trustChange: 70, vulnerabilityChange: 25 }
     ]
   },
   {
-    id: 'embrace_trap',
-    background: 'linear-gradient(to bottom, #0D0D1A 0%, #1A1A2E 100%)',
+    id: 'ask_true_feelings',
+    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
     character: '🎭',
-    dialogue: 'Вот и хорошо... *гладит вас по спине* Теперь вы мои, Ваше Величество. Не в грубом смысле, конечно. Но ваше сердце, ваша любовь... они дают мне всё, что нужно.',
+    dialogue: 'Истинные чувства? *медленно* Я... не знаю. Я так долго притворялся, что забыл, что реально.',
     speaker: 'Аффогато',
     choices: [
-      { text: 'Осознать ловушку слишком поздно', nextScene: 'ending_sweet_poison', affectionChange: 40, trustChange: -60, vulnerabilityChange: 80 }
+      { text: 'Помочь ему разобраться', nextScene: 'help_figure_out', affectionChange: 45, trustChange: 60, vulnerabilityChange: 20 }
     ]
   },
   {
-    id: 'question_motives',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: 'Почему я задаю такие вопросы? Потому что мне интересно, Ваше Величество. Вы - загадка. Король-воин, который правит железной рукой, но иногда... иногда я вижу в ваших глазах одиночество.',
-    speaker: 'Аффогато',
+    id: 'help_figure_out',
+    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
+    character: '👑',
+    dialogue: '"Тогда давай разберёмся вместе. Без масок. Без игр. Просто мы."',
+    speaker: 'Дарк Какао',
     choices: [
-      { text: 'Признаться в одиночестве', nextScene: 'confess_lonely', affectionChange: 15, trustChange: 20, vulnerabilityChange: 30 },
-      { text: 'Отрицать это', nextScene: 'deny_lonely', affectionChange: -15, trustChange: -10, vulnerabilityChange: -15 },
-      { text: 'Спросить, одинок ли он сам', nextScene: 'ask_his_lonely', affectionChange: 10, trustChange: 25, vulnerabilityChange: 5 }
-    ]
-  },
-  {
-    id: 'confess_lonely',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: 'Вы признаётесь в одиночестве... мне? *его выражение смягчается* Знаете, это делает вас... человечнее. Уязвимее. И это... полезная информация.',
-    speaker: 'Аффогато',
-    choices: [
-      { text: 'Не заметить его последних слов', nextScene: 'miss_warning', affectionChange: 20, trustChange: -15, vulnerabilityChange: 40 },
-      { text: 'Насторожиться от его тона', nextScene: 'suspicious_tone', affectionChange: 5, trustChange: 20, vulnerabilityChange: 15 },
-      { text: 'Спросить, что он имеет в виду', nextScene: 'ask_what_useful', affectionChange: 10, trustChange: 25, vulnerabilityChange: 20 }
-    ]
-  },
-  {
-    id: 'ask_his_lonely',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: 'Одинок ли я? *долгая пауза* Да. Более одинок, чем вы можете себе представить. Когда всё, что у тебя есть - это маски, ты забываешь, кто ты на самом деле.',
-    speaker: 'Аффогато',
-    choices: [
-      { text: 'Предложить помочь найти себя', nextScene: 'help_find', affectionChange: 40, trustChange: 50, vulnerabilityChange: 20 },
-      { text: 'Сказать, что хотите узнать настоящего его', nextScene: 'know_real', affectionChange: 35, trustChange: 45, vulnerabilityChange: 15 },
-      { text: 'Признаться, что боитесь того же', nextScene: 'fear_same', affectionChange: 45, trustChange: 55, vulnerabilityChange: 35 }
-    ]
-  },
-  {
-    id: 'direct_care',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: 'Вы... заметили? Как неожиданно. Я немного устал, да. Игра в интриги отнимает много сил. Но почему вас это волнует?',
-    speaker: 'Аффогато',
-    choices: [
-      { text: 'Сказать, что он важен для королевства', nextScene: 'important_kingdom', affectionChange: -5, trustChange: 5, vulnerabilityChange: 0 },
-      { text: 'Признать, что он важен лично для вас', nextScene: 'important_personally_early', affectionChange: 20, trustChange: -10, vulnerabilityChange: 35 },
-      { text: 'Уклониться от прямого ответа', nextScene: 'evade', affectionChange: -10, trustChange: 15, vulnerabilityChange: -10 }
-    ]
-  },
-  {
-    id: 'important_personally_early',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: 'Важен... лично для вас? *на мгновение вы видите искренне удивление, но оно быстро сменяется чем-то другим* Какое неожиданное признание, Ваше Величество.',
-    speaker: 'Аффогато',
-    choices: [
-      { text: 'Развить эту тему дальше', nextScene: 'develop_confession', affectionChange: 25, trustChange: -20, vulnerabilityChange: 45 },
-      { text: 'Почувствовать, что сказали слишком много', nextScene: 'said_too_much', affectionChange: 10, trustChange: 10, vulnerabilityChange: 25 }
-    ]
-  },
-  {
-    id: 'develop_confession',
-    background: 'linear-gradient(to bottom, #1A1F2C 0%, #2D2433 100%)',
-    character: '🎭',
-    dialogue: '*шагает ближе, его улыбка становится мягче* Продолжайте, Ваше Величество. Мне очень интересно слышать, насколько именно я важен для вас.',
-    speaker: 'Аффогато',
-    choices: [
-      { text: 'Рассказать о своих чувствах', nextScene: 'full_confession_trap', affectionChange: 35, trustChange: -35, vulnerabilityChange: 65 },
-      { text: 'Остановиться и подумать', nextScene: 'pause_think', affectionChange: 10, trustChange: 15, vulnerabilityChange: 20 }
-    ]
-  },
-  {
-    id: 'full_confession_trap',
-    background: 'linear-gradient(to bottom, #0D0D1A 0%, #1A1A2E 100%)',
-    character: '🎭',
-    dialogue: 'О, как трогательно... *его рука ложится на вашу* Вы открыли мне своё сердце. И я обещаю... заботиться о нём. По-своему.',
-    speaker: 'Аффогато',
-    choices: [
-      { text: 'Довериться ему', nextScene: 'ending_velvet_chains', affectionChange: 45, trustChange: -50, vulnerabilityChange: 85 }
+      { text: 'Протянуть руку', nextScene: 'ending_journey_begins', affectionChange: 70, trustChange: 85, vulnerabilityChange: 30 }
     ]
   },
   {
@@ -366,24 +474,23 @@ const gameData: Scene[] = [
     ]
   },
   {
-    id: 'fear_same',
+    id: 'offer_different_way',
     background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
-    character: '🎭',
-    dialogue: 'Вы... боитесь того же? Король, который правит целым королевством, боится потеряться? *его голос дрожит* Тогда... тогда давайте искать себя вместе.',
-    speaker: 'Аффогато',
+    character: '👑',
+    dialogue: '"Есть другой путь, Аффогато. Путь, где не нужен контроль. Где можно просто... быть."',
+    speaker: 'Дарк Какао',
     choices: [
-      { text: 'Согласиться и обнять его', nextScene: 'ending_soul_mates', affectionChange: 85, trustChange: 95, vulnerabilityChange: 45 },
-      { text: 'Поцеловать его руку', nextScene: 'ending_true_love', affectionChange: 80, trustChange: 90, vulnerabilityChange: 40 }
+      { text: 'Показать этот путь', nextScene: 'show_way', affectionChange: 50, trustChange: 65, vulnerabilityChange: 30 }
     ]
   },
   {
-    id: 'help_find',
-    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
+    id: 'show_way',
+    background: 'linear-gradient(to bottom, #3D2B47 0%, #4A3456 100%)',
     character: '🎭',
-    dialogue: 'Помочь найти себя... *его маска полностью падает* Вы действительно... хотите помочь? Не использовать, не контролировать... просто помочь?',
+    dialogue: '"Показать?" *его голос дрожит* "Я... я хочу увидеть этот путь."',
     speaker: 'Аффогато',
     choices: [
-      { text: 'Просто помочь', nextScene: 'ending_redemption', affectionChange: 75, trustChange: 85, vulnerabilityChange: 40 }
+      { text: 'Начать путь вместе', nextScene: 'ending_new_path', affectionChange: 75, trustChange: 85, vulnerabilityChange: 35 }
     ]
   },
   {
@@ -406,13 +513,31 @@ const gameData: Scene[] = [
     endingType: 'perfect'
   },
   {
-    id: 'ending_soul_mates',
+    id: 'ending_understanding',
     background: 'linear-gradient(to bottom, #3D2B47 0%, #4A3456 100%)',
-    character: '💕',
-    dialogue: 'Два одиноких сердца нашли друг друга в холодном королевстве. Вы держите Аффогато за руку, чувствуя, как его пальцы переплетаются с вашими. "Мы оба носили маски слишком долго," - говорит он. "Но теперь... теперь у нас есть друг друга." Родственные души, наконец объединившиеся.',
-    speaker: 'Финал: Родственные Души',
+    character: '💙',
+    dialogue: 'Вы обнимаете его, и он ломается в ваших руках. Все маски падают. Весь контроль исчезает. Остаётся только он - напуганный, одинокий, но больше не один. "Спасибо," - шепчет он. "Спасибо, что увидели меня."',
+    speaker: 'Финал: Понимание',
     isEnding: true,
     endingType: 'perfect'
+  },
+  {
+    id: 'ending_equals',
+    background: 'linear-gradient(to bottom, #3D2B47 0%, #4A3456 100%)',
+    character: '⚖️',
+    dialogue: '*Аффогато смеётся сквозь слёзы* "Мы оба манипуляторы. Оба играли друг с другом. Но разница в том... что ты играл ради меня. А я... я начинал ради себя." *берёт вас за руку* "Научи меня играть ради нас."',
+    speaker: 'Финал: Равные',
+    isEnding: true,
+    endingType: 'perfect'
+  },
+  {
+    id: 'ending_journey_begins',
+    background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
+    character: '🌟',
+    dialogue: 'Аффогато осторожно берёт вашу руку. Путь впереди долгий. Он ещё не знает, как любить без контроля. Вы ещё не знаете, как доверять без страха. Но вы идёте этим путём вместе. "Я могу ошибаться," - говорит он. "Буду," - отвечаете вы. "Но мы разберёмся."',
+    speaker: 'Финал: Начало Пути',
+    isEnding: true,
+    endingType: 'good'
   },
   {
     id: 'ending_healing_together',
@@ -424,13 +549,22 @@ const gameData: Scene[] = [
     endingType: 'good'
   },
   {
-    id: 'ending_redemption',
+    id: 'ending_new_path',
     background: 'linear-gradient(to bottom, #2D2433 0%, #3D2B47 100%)',
     character: '🌟',
-    dialogue: 'Аффогато делает первые шаги к искуплению. Не за прошлые грехи, а к тому, чтобы стать лучше. Вы рядом на каждом шагу, не как судья, а как поддержка. "Я не обещаю, что изменюсь быстро," - говорит он. "Но я обещаю пытаться. Ради нас."',
-    speaker: 'Финал: Путь Искупления',
+    dialogue: 'Аффогато делает первые шаги по новому пути. Не без споткновений. Иногда старые привычки возвращаются. Но каждый раз вы рядом, чтобы напомнить ему, что есть другой способ. "Я не обещаю, что изменюсь быстро," - говорит он. "Но я обещаю пытаться. Ради нас."',
+    speaker: 'Финал: Новый Путь',
     isEnding: true,
     endingType: 'good'
+  },
+  {
+    id: 'ending_acceptance_earned',
+    background: 'linear-gradient(to bottom, #3D2B47 0%, #4A3456 100%)',
+    character: '💚',
+    dialogue: '"Ты принимаешь меня? Даже зная, что я пытался..." - "Именно поэтому," - прерываете вы. "Ты больше не должен притворяться." Аффогато улыбается - впервые настоящей улыбкой.',
+    speaker: 'Финал: Заслуженное Принятие',
+    isEnding: true,
+    endingType: 'perfect'
   },
   {
     id: 'ending_new_dawn',
@@ -451,15 +585,6 @@ const gameData: Scene[] = [
     endingType: 'manipulation'
   },
   {
-    id: 'ending_sweet_poison',
-    background: 'linear-gradient(to bottom, #0D0D1A 0%, #1A1A2E 100%)',
-    character: '🍷',
-    dialogue: 'Его любовь как сладкий яд. Каждый день вы погружаетесь глубже в зависимость от его одобрения, его улыбок, его прикосновений. Аффогато управляет вами через вашу любовь к нему. И самое страшное - вы счастливы. В своём неведении, в своей слепоте... вы счастливы.',
-    speaker: 'Финал: Сладкий Яд',
-    isEnding: true,
-    endingType: 'manipulation'
-  },
-  {
     id: 'ending_velvet_chains',
     background: 'linear-gradient(to bottom, #1A1A2E 0%, #0D0D1A 100%)',
     character: '⛓️💜',
@@ -467,6 +592,15 @@ const gameData: Scene[] = [
     speaker: 'Финал: Бархатные Цепи',
     isEnding: true,
     endingType: 'trapped'
+  },
+  {
+    id: 'order_leave',
+    background: 'linear-gradient(to bottom, #1A1F2C 0%, #0D0D1A 100%)',
+    character: '🎭',
+    dialogue: '*Аффогато замирает* ...Как скажете, Ваше Величество. *уходит, его шаги эхом отдаются в пустом зале* Вы остаётесь один. В безопасности. В одиночестве.',
+    speaker: 'Финал: Одинокая Безопасность',
+    isEnding: true,
+    endingType: 'neutral'
   },
   {
     id: 'agree_power',
@@ -541,9 +675,9 @@ const Index = () => {
               И советник, чьи намерения темны, как шоколад.
             </p>
             <div className="pt-4 px-8 text-sm text-muted-foreground font-cormorant italic leading-relaxed border-l-2 border-primary/30">
-              Аффогато не верит в любовь. Он видит в ней только инструмент манипуляции.<br/>
-              Если вы откроете сердце слишком рано - он воспользуется этим.<br/>
-              Но если заслужите его доверие... может быть, он тоже научится любить.
+              Аффогато - мастер манипуляций. Он не верит в любовь.<br/>
+              Признаетесь слишком рано - станете марионеткой.<br/>
+              Но распознайте его игру, противостойте ей... и, возможно, найдёте настоящую любовь.
             </div>
             <div className="pt-6">
               <Button 
@@ -658,6 +792,7 @@ const Index = () => {
                     {currentScene.endingType === 'manipulation' && '🎭 Вы стали марионеткой'}
                     {currentScene.endingType === 'trapped' && '⛓️ Вы в ловушке любви'}
                     {currentScene.endingType === 'power' && '⚔️ Концовка силы'}
+                    {currentScene.endingType === 'resistance' && '🛡️ Вы устояли'}
                   </div>
                   <div className="text-sm font-cormorant text-muted-foreground">
                     Привязанность: {affection}% | Доверие: {trust}% | Уязвимость: {vulnerability}%
